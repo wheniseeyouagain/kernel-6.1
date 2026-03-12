@@ -173,6 +173,29 @@ config DWMAC_ROCKCHIP
 	  This selects the Rockchip RK3288 SoC glue layer support for
 	  the stmmac device driver.
 
+config DWMAC_RK_AUTO_DELAYLINE
+	bool "Auto search rgmii delayline"
+	default DWMAC_ROCKCHIP
+	depends on DWMAC_ROCKCHIP
+	help
+	  Auto search suitable rgmii delayline at first boot, and save it
+	  at vendor storage if success.
+
+config DWMAC_RK_AUTO_DELAYLINE_RAPID_SEARCH
+	bool "Rapid search"
+	default DWMAC_RK_AUTO_DELAYLINE
+	depends on DWMAC_RK_AUTO_DELAYLINE
+	help
+	  The delaylines are halted as soon as they become available, rather
+	  than choosing the median value after all scans.
+
+config DWMAC_RK_DELAYLINE_SCAN_STEP
+	hex "Auto search rgmii delayline step"
+	default 0x1
+	depends on DWMAC_ROCKCHIP
+	help
+	  The step of the auto search.
+
 config DWMAC_ROCKCHIP_TOOL
 	bool "Rockchip dwmac tool support"
 	depends on DWMAC_ROCKCHIP

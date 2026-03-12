@@ -276,6 +276,11 @@ struct stmmac_priv {
 
 	void __iomem *mmcaddr;
 	void __iomem *ptpaddr;
+	#ifdef CONFIG_DWMAC_RK_AUTO_DELAYLINE
+		bool delayline_scanned;
+		struct delayed_work scan_dwork;
+	#endif
+
 	unsigned long active_vlans[BITS_TO_LONGS(VLAN_N_VID)];
 	int sfty_ce_irq;
 	int sfty_ue_irq;

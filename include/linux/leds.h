@@ -521,6 +521,7 @@ struct gpio_led {
 	unsigned	panic_indicator : 1;
 	unsigned	default_state : 2;
 	unsigned	retain_state_shutdown : 1;
+	unsigned int delay_reg; //delay trigger,wucaicheng,1378913492@qq.com,20230817
 	/* default_state should be one of LEDS_GPIO_DEFSTATE_(ON|OFF|KEEP) */
 	struct gpio_desc *gpiod;
 };

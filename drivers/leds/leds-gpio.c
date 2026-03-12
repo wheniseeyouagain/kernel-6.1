@@ -17,7 +17,7 @@
 #include <linux/property.h>
 #include <linux/slab.h>
 #include "leds.h"
-
+#include <linux/delay.h>
 struct gpio_led_data {
 	struct led_classdev cdev;
 	struct gpio_desc *gpiod;
@@ -118,7 +118,12 @@ static int create_gpio_led(const struct gpio_led *template,
 		ret = devm_led_classdev_register_ext(parent, &led_dat->cdev,
 						     &init_data);
 	}
-
+    //delay trigger,wucaicheng,1378913492@qq.com,20230817
+    // (template = gpio_led)->delay_reg from kernel/include/linux/leds.h custom
+	// msleep form kernel/include/linux/delay.h
+	if (template->delay_reg > 0) {
+        msleep(template->delay_reg);
+    }
 	return ret;
 }
 
@@ -146,6 +151,7 @@ static struct gpio_leds_priv *gpio_leds_create(struct platform_device *pdev)
 		struct gpio_led_data *led_dat = &priv->leds[priv->num_leds];
 		struct gpio_led led = {};
 
+		struct device_node *np = to_of_node(child);
 		/*
 		 * Acquire gpiod from DT with uninitialized label, which
 		 * will be updated after LED class device is registered,
@@ -160,6 +166,15 @@ static struct gpio_leds_priv *gpio_leds_create(struct platform_device *pdev)
 		}
 
 		led_dat->gpiod = led.gpiod;
+
+		fwnode_property_read_string(child, "linux,default-trigger",
+			&led.default_trigger);
+
+		//delay trigger,wucaicheng,1378913492@qq.com,20230817
+		of_property_read_u32(np, "linux,delay-reg", &led.delay_reg);
+		of_property_read_u32(np, "linux,blink-delay-on", (u32*)(&led_dat->cdev.blink_delay_on));
+		of_property_read_u32(np, "linux,blink-delay-off", (u32*)(&led_dat->cdev.blink_delay_off));		
+
 
 		led.default_state = led_init_default_state_get(child);
 
