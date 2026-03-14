@@ -527,6 +527,8 @@ source "drivers/net/ieee802154/Kconfig"
 
 source "drivers/net/wwan/Kconfig"
 
+source "drivers/net/lte/Kconfig"
+
 config XEN_NETDEV_FRONTEND
 	tristate "Xen network device frontend driver"
 	depends on XEN

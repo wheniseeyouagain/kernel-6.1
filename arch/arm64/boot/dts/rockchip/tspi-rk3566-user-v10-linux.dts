@@ -98,7 +98,7 @@
 
 //耳机插入检测，不使用扩展板情况需关闭，否则默认会检测到耳机插入
 &rk_headset {
-	status = "disabled";
+	status = "okay";
 };
 
 //用户串口3

@@ -1,34 +1,25 @@
-/*********************************************************************
- *           立创开发板不靠卖板赚钱，以培养中国工程师为己任  
- *         泰山派软硬件资料与相关扩展板软硬件资料官网全部开源
- *                      开发板官网：www.lckfb.com            
- *                     立创论坛：oshwhub.com/forum           
- *            关注B站：【立创开发板】，掌握我们的最新动态！  
+/********************************************************************
+ * SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+ * 
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2026 LCKFB <lckfb@sz-jlc.com>
  *********************************************************************
- * 文件名：tspi-rk3566-edp-v10.dtsi
- * 描述：
- * 更新:
- * 时间          作者           联系           说明
- * 2023-09-13   吴才成    1378913492@qq.com   v1.0.0
+ * Wiki-(Chinese)：https://wiki.lckfb.com/
+ * Wiki-(English)：https://wiki.lckfb.com/en/
  *********************************************************************/
 
 / {
-	edp_panel: edp-panel {
+	edp-panel {
 		compatible = "simple-panel";
 		backlight = <&backlight>;
 		enable-gpios = <&gpio0 RK_PA6 GPIO_ACTIVE_HIGH>;
-		enable-delay-ms = <200>;
-		prepare-delay-ms = <200>;
-        unprepare-delay-ms = <200>;
-        disable-delay-ms = <200>;
-		bpc = <8>;
-		bus-format= <MEDIA_BUS_FMT_RGB888_1X24>;
+		enable-delay-ms = <120>;
 		pinctrl-0 = <&edp_en_gpio>;
 		display-timings {
 			native-mode = <&edp_timing0>;
 
 			edp_timing0: timing0 {
-				// 11.6 inches, 1366x768
+				//11.6-inch 1366x768
 				clock-frequency = <72300000>;
 				hactive = <1366>;
 				vactive = <768>;
@@ -119,14 +110,14 @@
 	};
 };
 
-
 &edp {
 	status = "okay";
 	force-hpd;
     ports {
-		port@1 {
+		edp_out: port@1 {
 			reg = <1>;
-			edp_out_panel: endpoint {
+			edp_out_panel: endpoint@0 {
+				reg = <0>;
 				remote-endpoint = <&panel_in_edp>;
 			};
 		};
@@ -137,41 +128,28 @@
  	status = "okay";
 };
 
-&route_edp {
-	status = "okay";
-	// connect = <&vp0_out_edp>;
-	connect = <&vp1_out_edp>;
-};
-
 &edp_in_vp0 {
-	// status = "okay";  
-	status = "disabled";
+	status = "disabled";  
+	// status = "okay";
 };
 
 &edp_in_vp1 {
-	// status = "disabled";
-	status = "okay"; 
-};
-
-&edp_panel {
 	status = "okay";
+	// status = "disabled"; 
 };
 
-/*************************************************
-				11.6 inches, 1366x768
-**************************************************/
-// &edp_timing0 {
-// 	clock-frequency = <72300000>;
-// 	hactive = <1366>;
-// 	vactive = <768>;
-// 	hfront-porch = <150>;
-// 	hsync-len = <5>;
-// 	hback-porch = <5>;
-// 	vfront-porch = <3>;
-// 	vsync-len = <1>;
-// 	vback-porch = <9>;
-// 	hsync-active = <0>;
-// 	vsync-active = <0>;
-// 	de-active = <0>;
-// 	pixelclk-active = <0>;
-// };
+/*
+ * Workaround for kernel 6.1 eDP logo handover issue:
+ * Delete logo properties to avoid blank screen on cold boot.
+ * eDP will skip logo display and directly show desktop content.
+ * HDMI route can still keep logo properties for boot animation.
+ */
+&route_edp {
+	status = "okay";
+	// connect = <&vp0_out_edp>;  // 连接设置
+	connect = <&vp1_out_edp>;
+	/delete-property/ logo,uboot;
+	/delete-property/ logo,kernel;
+	/delete-property/ logo,mode;
+	/delete-property/ charge_logo,mode;
+};
