@@ -13,16 +13,19 @@
 		compatible = "simple-panel";
 		backlight = <&backlight>;
 		enable-gpios = <&gpio0 RK_PA6 GPIO_ACTIVE_HIGH>;
+		prepare-delay-ms = <120>;
 		enable-delay-ms = <120>;
+		unprepare-delay-ms = <120>;
+		disable-delay-ms = <120>;
 		pinctrl-0 = <&edp_en_gpio>;
 		display-timings {
 			native-mode = <&edp_timing0>;
 
 			edp_timing0: timing0 {
-				//11.6-inch 1366x768
-				clock-frequency = <72300000>;
-				hactive = <1366>;
-				vactive = <768>;
+			//11.6-inch 1366x768
+			clock-frequency = <72300000>;
+			hactive = <1368>;
+			vactive = <768>;
 				hfront-porch = <48>;
 				hsync-len = <32>;
 				hback-porch = <160>;
@@ -51,8 +54,13 @@
 		};
 
 		ports {
-			panel_in_edp: endpoint {
-				remote-endpoint = <&edp_out_panel>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				panel_in_edp: endpoint {
+					remote-endpoint = <&edp_out_panel>;
+				};
 			};
 		};
 	};
@@ -114,8 +122,12 @@
 	status = "okay";
 	force-hpd;
     ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
 		edp_out: port@1 {
 			reg = <1>;
+			#address-cells = <1>;
+			#size-cells = <0>;
 			edp_out_panel: endpoint@0 {
 				reg = <0>;
 				remote-endpoint = <&panel_in_edp>;
@@ -129,13 +141,13 @@
 };
 
 &edp_in_vp0 {
-	status = "disabled";  
-	// status = "okay";
+	status = "okay";
+	// status = "disabled";
 };
 
 &edp_in_vp1 {
-	status = "okay";
-	// status = "disabled"; 
+	status = "disabled";
+	// status = "okay";
 };
 
 /*
@@ -146,10 +158,9 @@
  */
 &route_edp {
 	status = "okay";
-	// connect = <&vp0_out_edp>;  // 连接设置
-	connect = <&vp1_out_edp>;
-	/delete-property/ logo,uboot;
-	/delete-property/ logo,kernel;
-	/delete-property/ logo,mode;
-	/delete-property/ charge_logo,mode;
+	connect = <&vp0_out_edp>;
+	logo,uboot = "logo.bmp";
+	logo,kernel = "logo_kernel.bmp";
+	logo,mode = "center";
+	charge_logo,mode = "center";
 };

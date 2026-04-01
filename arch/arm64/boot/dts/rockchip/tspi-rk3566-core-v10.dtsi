@@ -1,23 +1,12 @@
-// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-/*
- * Copyright (c) 2020 Rockchip Electronics Co., Ltd.
- *
- */
-
-/*********************************************************************
- *           立创开发板不靠卖板赚钱，以培养中国工程师为己任  
- *         泰山派软硬件资料与相关扩展板软硬件资料官网全部开源
- *                      开发板官网：www.lckfb.com            
- *                     立创论坛：oshwhub.com/forum           
- *            关注B站：【立创开发板】，掌握我们的最新动态！  
+/********************************************************************
+ * SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+ * 
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2026 LCKFB <lckfb@sz-jlc.com>
  *********************************************************************
- * 文件名：tspi-rk3566-core-v10.dtsi
- * 描述：
- * 更新:
- * 时间          作者           联系           说明
- * 2023-07-21   吴才成    1378913492@qq.com   v1.0.0
+ * Wiki-(Chinese)：https://wiki.lckfb.com/
+ * Wiki-(English)：https://wiki.lckfb.com/en/
  *********************************************************************/
- 
  
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/pwm/pwm.h>
@@ -280,14 +269,14 @@
 	cursor-win-id = <ROCKCHIP_VOP2_CLUSTER1>;
 };
 
-//npu总线
+//NPU bus
 &bus_npu {
 	bus-supply = <&vdd_logic>;
 	pvtm-supply = <&vdd_cpu>;
 	status = "okay";
 };
 
-//can0接口
+//CAN0 interface
 &can0 {
 	assigned-clocks = <&cru CLK_CAN0>;
 	assigned-clock-rates = <150000000>;
@@ -295,7 +284,7 @@
 	pinctrl-0 = <&can0m1_pins>;
 	status = "disabled";
 };
-//can1接口
+//CAN1 interface
 &can1 {
 	assigned-clocks = <&cru CLK_CAN1>;
 	assigned-clock-rates = <150000000>;
@@ -303,7 +292,7 @@
 	pinctrl-0 = <&can1m1_pins>;
 	status = "disabled";
 };
-//can2接口
+//CAN2 interface
 &can2 {
 	assigned-clocks = <&cru CLK_CAN2>;
 	assigned-clock-rates = <150000000>;
@@ -317,18 +306,18 @@
 	cpu-supply = <&vdd_cpu>;
 };
 
-//dram phy接口
+//DRAM PHY interface
 &dfi {
 	status = "okay";
 };
 
-//dram内存控制
+//DRAM memory controller
 &dmc {
 	center-supply = <&vdd_logic>;
 	status = "okay";
 };
 
-//GPU图像处理
+//GPU image processing
 &gpu {
 	mali-supply = <&vdd_gpu>;
 	status = "okay";
@@ -631,25 +620,25 @@
 		     &i2s1m0_sdo0>;
 };
 
-//像增强处理器,锐化降噪等等
+//Image enhancement processor, sharpening, denoising, etc.
 &iep {
 	status = "okay";
 };
-//像增强处理器,内存管理单元
+//Image enhancement processor memory management unit
 &iep_mmu {
 	status = "okay";
 };
 
-//硬件jpeg解码
+//Hardware JPEG decoder
 &jpegd {
 	status = "okay";
 };
-//jpeg内存管理
+//JPEG memory management
 &jpegd_mmu {
 	status = "okay";
 };
 
-//媒体处理平台服务模块提供音视频编解码服务灯
+//Media processing platform service module provides audio/video encoding and decoding services
 &mpp_srv {
 	status = "okay";
 };
@@ -719,51 +708,51 @@
   *	H:VCCIO2 must supply 1.8V
   */
 
-//电源管理非常重要，搞不好会烧硬件的，不要乱配置哟，需要根据原理图来配。
+//Power management is very important, improper configuration may damage hardware. Do not modify randomly, configure according to the schematic.
 &pmu_io_domains {
 	status = "okay";
 	pmuio2-supply = <&vcc3v3_pmu>;
 	vccio1-supply = <&vccio_acodec>;
 	vccio3-supply = <&vccio_sd>;
-	vccio4-supply = <&vcc_1v8>;//wucaicheng wifi VCCIO_WL 0¦¸=1V8
+	vccio4-supply = <&vcc_1v8>;
 	vccio5-supply = <&vcc_3v3>;
-	vccio6-supply = <&vcc_1v8>;//wucaicheng PHY  0¦¸=1V8
+	vccio6-supply = <&vcc_1v8>;
 	vccio7-supply = <&vcc_3v3>;
 };
 
-//图像处理加速器
+//Image processing accelerator
 &rk_rga {
 	status = "okay";
 };
 
-//音视频解码器
+//Audio/Video decoder
 &rkvdec {
 	status = "okay";
 };
 
-//音视频解码器内存管理
+//Audio/Video decoder memory management
 &rkvdec_mmu {
 	status = "okay";
 };
 
-//音视频编码器
+//Audio/Video encoder
 &rkvenc {
 	venc-supply = <&vdd_logic>;
 	status = "okay";
 };
 
-//音视频编码器内存管理
+//Audio/Video encoder memory management
 &rkvenc_mmu {
 	status = "okay";
 };
 
-//神经网络处理
+//Neural network processing
 &rknpu {
 	rknpu-supply = <&vdd_npu>;
 	status = "okay";
 };
 
-//神经网络内存管理
+//Neural network memory management
 &rknpu_mmu {
 	status = "okay";
 };
@@ -774,7 +763,7 @@
 	vref-supply = <&vcca_1v8>;
 };
 
-//用于EMMC通信
+//Used for EMMC communication
 &sdhci {
 	bus-width = <8>;
 	supports-emmc;
@@ -783,7 +772,7 @@
 	status = "okay";
 };
 
-//NAND闪存控制器
+//NAND flash controller
 &nandc0 {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -798,12 +787,12 @@
 	};
 };
 
-//SPi FLSH
+//SPI Flash
 &sfc {
 	status = "disabled";
 };
 
-//TF卡
+//TF card
 &sdmmc0 {
 	max-frequency = <150000000>;
 	supports-sd;
@@ -839,19 +828,19 @@
 	status = "disabled";
 };
 
-//音频输出接口
+//Audio output interface
 &spdif_8ch {
 	status = "disabled";
 };
 
-//温度监测
+//Temperature monitoring
 &tsadc {
 	status = "okay";
 };
 
-//USB架构大概的样子是
-//CPU<---->usb controler<---->usb phy<--数据线-->usb device
-//原理图中一个phy可能会对应多个usb，下面的命名u2表示usb2.0，phy0
+//USB architecture overview:
+//CPU<---->usb controller<---->usb phy<--data line-->usb device
+//In the schematic, one PHY may correspond to multiple USBs. The naming below uses u2 for USB2.0, phy0
 &u2phy0_host {
 	phy-supply = <&vcc5v0_host>;
 	status = "okay";
@@ -879,12 +868,12 @@
 	status = "okay";
 };
 
-//ehci支持usb2.0
+//EHCI supports USB2.0
 &usb_host0_ehci {
 	status = "okay";
 };
 
-//ohci支持usb1.0和usb1.1
+//OHCI supports USB1.0 and USB1.1
 &usb_host0_ohci {
 	status = "okay";
 };
@@ -897,14 +886,14 @@
 	status = "okay";
 };
 
-//typec or typeA
+//Type-C or Type-A
 &usbdrd_dwc3 {
 	dr_mode = "otg";
 	extcon = <&usb2phy0>;
 	status = "okay";
 };
 
-//hostusb3.0
+//Host USB3.0
 &usbdrd30 {
 	status = "okay";
 };
@@ -917,7 +906,7 @@
 	status = "okay";
 };
 
-//音活动检测模块
+//Voice activity detection module
 &vad {
 	rockchip,audio-src = <&i2s1_8ch>;
 	rockchip,buffer-time-ms = <128>;
@@ -925,39 +914,39 @@
 	rockchip,mode = <0>;
 };
 
-//视频解码硬件加速H.26X等
+//Video decoder hardware acceleration H.26X etc.
 &vdpu {
 	status = "okay";
 };
 
-//视频解码器内存管理单元
+//Video decoder memory management unit
 &vdpu_mmu {
 	status = "okay";
 };
 
-//视频编码硬件加速H.26X等
+//Video encoder hardware acceleration H.26X etc.
 &vepu {
 	status = "okay";
 };
 
-//视频编码器内存管理单元
+//Video encoder memory management unit
 &vepu_mmu {
 	status = "okay";
 };
 
-//VOP是视频输出处理器
+//VOP is video output processor
 &vop {
 	status = "okay";
 	assigned-clocks = <&cru DCLK_VOP0>, <&cru DCLK_VOP1>;
 	assigned-clock-parents = <&pmucru PLL_HPLL>, <&cru PLL_VPLL>;
 };
 
-//v视频输出处理器的内存管理单元
+//Video output processor memory management unit
 &vop_mmu {
 	status = "okay";
 };
 
-//串口一，目前用在蓝牙上了
+//UART1, currently used for Bluetooth
 &uart1 {
 	status = "okay";
 	pinctrl-names = "default";

@@ -1,0 +1,23 @@
+# ubootEnv.txt - RK3566/RK3568 Dynamic Device Tree Overlay Configuration
+#
+# This file configures device tree overlays that are dynamically loaded by U-Boot.
+# Place this file at: /boot/ubootEnv.txt
+# Overlay files should be placed in: /boot/overlays/
+#
+# ============================================
+# Usage Instructions:
+# ============================================
+#
+# 1. To enable device tree overlays, edit the 'overlays=' line below
+# 2. List overlay filenames separated by spaces (include .dtbo extension)
+# 3. Lines starting with '#' are comments and ignored
+# 4. After modifying this file, run 'sync' before rebooting!
+#
+# Example:
+#   overlays=leds-test.dtbo
+#
+
+# ============================================
+# Active Overlays Configuration
+# ============================================
+# overlays=leds-test.dtbo

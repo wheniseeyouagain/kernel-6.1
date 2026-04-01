@@ -1,33 +1,28 @@
-
-/*********************************************************************
- *           立创开发板不靠卖板赚钱，以培养中国工程师为己任  
- *         泰山派软硬件资料与相关扩展板软硬件资料官网全部开源
- *                      开发板官网：www.lckfb.com            
- *                     立创论坛：oshwhub.com/forum           
- *            关注B站：【立创开发板】，掌握我们的最新动态！  
+/********************************************************************
+ * SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+ * 
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2026 LCKFB <lckfb@sz-jlc.com>
  *********************************************************************
- * 文件名：tspi-rk3566-csi-v10
- * 描述：mipi 摄像头
- * 更新:
- * 时间          作者           联系           说明
- * 2023-09-13   吴才成    1378913492@qq.com   v1.0.0
+ * Wiki-(Chinese)：https://wiki.lckfb.com/
+ * Wiki-(English)：https://wiki.lckfb.com/en/
  *********************************************************************/
 
-//phy u序列
+//phy u sequence
 &combphy1_usq {
 	status = "okay";
 };
 
-//phy P序列
+//phy P sequence
 &combphy2_psq {
 	status = "okay";
 };
 
-//dphy硬件
+//dphy hardware
 &csi2_dphy_hw {
 	status = "okay";
 };
-//摄像头D-PHY接口
+//Camera D-PHY interface
 &csi2_dphy0 {
 	status = "disabled";
 	/*
@@ -63,7 +58,7 @@
 	};
 };
 
-//摄像头D-PHY接口
+//Camera D-PHY interface
 &csi2_dphy1 {
 	status = "okay";
 
@@ -100,7 +95,7 @@
 		};
 	};
 };
-//摄像头D-PHY接口
+//Camera D-PHY interface
 &csi2_dphy2 {
 	status = "disabled";
 
@@ -178,7 +173,7 @@
 	status = "disabled";
 };
 
-//dvp接口摄像头
+//DVP interface camera
 &rkcif_dvp {
 	status = "disabled";
 
@@ -193,7 +188,7 @@
 	};
 };
 
-//LVDS接口摄像头
+//LVDS interface camera
 &rkcif_mipi_lvds {
 	status = "disabled";
 
@@ -205,22 +200,22 @@
 	};
 };
 
-//摄像头内存管理
+//Camera memory management
 &rkcif_mmu {
 	status = "disabled";
 };
 
-//硬件图像处理器模块
+//Hardware image processor module
 &rkisp {
 	status = "okay";
 };
 
-//硬件图像处理器模块内存管理器
+//Hardware image processor module memory manager
 &rkisp_mmu {
 	status = "okay";
 };
 
-//图像处理接口
+//Image processing interface
 &rkisp_vir0 {
 	status = "okay";
 

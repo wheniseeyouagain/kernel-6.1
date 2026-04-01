@@ -1,21 +1,11 @@
-// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-/*
- * Copyright (c) 2020 Rockchip Electronics Co., Ltd.
- *
- */
-
- /*********************************************************************
- *           立创开发板不靠卖板赚钱，以培养中国工程师为己任  
- *         泰山派软硬件资料与相关扩展板软硬件资料官网全部开源
- *                      开发板官网：www.lckfb.com            
- *                     立创论坛：oshwhub.com/forum           
- *            关注B站：【立创开发板】，掌握我们的最新动态！  
+/********************************************************************
+ * SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+ * 
+ * Copyright (c) 2023 Rockchip Electronics Co., Ltd.
+ * Copyright (c) 2026 LCKFB <lckfb@sz-jlc.com>
  *********************************************************************
- * 文件名：tspi-rk3566-user-v10.dtsi
- * 描述：用户自定义层
- * 更新:
- * 时间          作者           联系           说明
- * 2023-09-13   吴才成    1378913492@qq.com   v1.0.0
+ * Wiki-(Chinese)：https://wiki.lckfb.com/
+ * Wiki-(English)：https://wiki.lckfb.com/en/
  *********************************************************************/
 /dts-v1/;
 
@@ -26,25 +16,27 @@
 #include <dt-bindings/display/rockchip_vop.h>
 
 
-//tspi核心配置层，这里是几乎后期不需要怎么改动
+//tspi core config layer, rarely needs modification
 #include "tspi-rk3566-core-v10.dtsi"
 
-//【开/关】EDP 显示屏幕配置，用户可以基于此复制自己的屏幕，注意EDP与MIPI屏幕互斥，因为共用了VOP如果需要同显自行修改
+//[ON/OFF] EDP display screen config, users can copy and modify for their own screen
+// Note: EDP and MIPI are mutually exclusive as they share VOP. Modify yourself if simultaneous display needed
 // #include "tspi-rk3566-edp-v10.dtsi"
 
-//【开/关】mipi 显示屏幕配置，用户可以基于此复制自己的屏幕，注意EDP与MIPI屏幕互斥，因为共用了VOP如果需要同显自行修改
-// #include "tspi-rk3566-dsi-v10.dtsi"
+//[ON/OFF] MIPI display screen config, users can copy and modify for their own screen
+// Note: EDP and MIPI are mutually exclusive as they share VOP. Modify yourself if simultaneous display needed
+#include "tspi-rk3566-dsi-v10.dtsi"
 
-//【开/关】HDMI 显示屏幕配置，里面内容几乎可以不用动，如果不需要hdmi显示直接注释掉即可
-#include "tspi-rk3566-hdmi-v10.dtsi"
+//[ON/OFF] HDMI display screen config, rarely needs modification, comment out if HDMI not needed
+// #include "tspi-rk3566-hdmi-v10.dtsi"
 
-//【开/关】摄像头 目前视频的是ov5659
+//[ON/OFF] Camera, currently using ov5695
 #include "tspi-rk3566-csi-v10.dtsi"
 
-//【开/关】网口 扩展板上使用的是千兆网，不接扩展板情况下可以关闭
+//[ON/OFF] Ethernet, expansion board uses Gigabit Ethernet, can be disabled if not using expansion board
 #include "tspi-rk3566-gmac1-v10.dtsi"
 
-//【开/关】下方是用户定义层，所有用户修改理论上在此下方修改就好了
+//[ON/OFF] User definition layer below, all user modifications should be made here
 / {
 	model = "lckfb tspi V10 Board";
 	compatible = "lckfb,tspi-v10", "rockchip,rk3566";
@@ -61,21 +53,21 @@
 		rgb_led_r: rgb-led-r {
 			gpios = <&gpio1 RK_PB2 GPIO_ACTIVE_LOW>;
 			linux,default-trigger = "timer";
-			linux,delay-reg = <0>;   		// 延时注册
-			linux,blink-delay-on = <500>; 	// 打开时间
-			linux,blink-delay-off = <500>;	// 关闭时间
+			linux,delay-reg = <0>;   		// delay register
+			linux,blink-delay-on = <500>; 	// on time
+			linux,blink-delay-off = <500>;	// off time
 		};
 		rgb_led_g: rgb-led-g {
 			gpios = <&gpio1 RK_PB1 GPIO_ACTIVE_LOW>;
 			linux,default-trigger = "timer";
-			linux,delay-reg = <100>;   		// 延时注册
+			linux,delay-reg = <100>;   		// delay register
 			linux,blink-delay-on = <1000>; 
 			linux,blink-delay-off = <1000>;
 		};
 		rgb_led_b: rgb-led-b {
 			gpios = <&gpio1 RK_PB0 GPIO_ACTIVE_LOW>;
 			linux,default-trigger = "timer";
-			linux,delay-reg = <100>;  		// 延时注册
+			linux,delay-reg = <100>;  		// delay register
 			linux,blink-delay-on = <1500>; 
 			linux,blink-delay-off = <1500>;
 		};
@@ -91,28 +83,28 @@
 	};
 };
 
-//用户三色灯
+//User RGB LED
 &leds {
 	status = "okay";
 };
 
-//耳机插入检测，不使用扩展板情况需关闭，否则默认会检测到耳机插入
+//Headphone insertion detection, should be disabled if not using expansion board, otherwise it will detect headphone by default
 &rk_headset {
 	status = "okay";
 };
 
-//用户串口3
+//User UART3
 &uart3 {
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart3m1_xfer>;
 };
 
-//用户I2C2
+//User I2C2
 &i2c2 {
 	status = "okay";
 
-	/*添加你的I2C设备参考
+	/*Add your I2C device reference
 	gt1x: gt1x@14 {
 		compatible = "goodix,gt1x";
 		reg = <0x14>;
@@ -127,7 +119,7 @@
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c3m1_xfer>;
-	/*添加你的I2C设备参考
+	/*Add your I2C device reference
 	gt1x: gt1x@14 {
 		compatible = "goodix,gt1x";
 		reg = <0x14>;
@@ -141,15 +133,16 @@
 
 &spi3 {
 	status = "okay";
-	max-freq = <48000000>;
-	dma-names = "tx","rx";
+	// max-freq = <48000000>;
+	// dma-names = "tx","rx";
 	pinctrl-names = "default", "high_speed";
 	pinctrl-0 = <&spi3m1_cs0 &spi3m1_pins>;
 	pinctrl-1 = <&spi3m1_cs0 &spi3m1_pins_hs>;
-	spi_test@10 {
-		compatible ="rockchip,spi_test_bus1_cs0";
+	spi_test@0 {
+		compatible ="rockchip,spidev";
 		reg = <0>;
-		spi-max-frequency = <24000000>;
+		spi-max-frequency = <10000000>;
+		pinctrl-names = "default";
 		status = "okay";
 	};
 };
@@ -166,7 +159,7 @@
 	status = "okay";
 };
 
-//pwd 15遥控器
+//PWM15 IR remote controller
 &pwm15 {
 	status = "okay";
 	compatible = "rockchip,remotectl-pwm";
@@ -176,9 +169,9 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pwm15m0_pins>;
 
-	//用户自定方法：adb设置输出日志并通过dmesg确定usercode=address与key_table=command
+	//Custom method: enable adb log output and use dmesg to determine usercode=address and key_table=command
 	//echo 1 > sys/module/rockchip_pwm_remotectl/parameters/code_print
-	//键值可在 include/dt-bindings/input/linux-event-codes.h 中查找
+	//Key codes can be found in include/dt-bindings/input/linux-event-codes.h
 	ir_key1 {
 		rockchip,usercode = <0xff00>;
 		rockchip,key_table =
