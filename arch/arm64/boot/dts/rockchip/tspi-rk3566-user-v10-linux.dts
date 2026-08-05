@@ -25,10 +25,10 @@
 
 //[ON/OFF] MIPI display screen config, users can copy and modify for their own screen
 // Note: EDP and MIPI are mutually exclusive as they share VOP. Modify yourself if simultaneous display needed
-#include "tspi-rk3566-dsi-v10.dtsi"
+// #include "tspi-rk3566-dsi-v10.dtsi"
 
 //[ON/OFF] HDMI display screen config, rarely needs modification, comment out if HDMI not needed
-// #include "tspi-rk3566-hdmi-v10.dtsi"
+#include "tspi-rk3566-hdmi-v10.dtsi"
 
 //[ON/OFF] Camera, currently using ov5695
 #include "tspi-rk3566-csi-v10.dtsi"
@@ -72,7 +72,22 @@
 			linux,blink-delay-off = <1500>;
 		};
 	};
-
+	regulators: regulators {
+        compatible = "simple-bus";
+        #address-cells = <1>;
+        #size-cells = <0>;
+		
+		usb_hub_en: usb-hub-en {
+            compatible = "regulator-fixed";
+            regulator-name = "usb_hub_en";
+            gpio = <&gpio0 RK_PA5 GPIO_ACTIVE_HIGH>; 
+            enable-active-high;
+            regulator-always-on;
+            regulator-boot-on;
+            regulator-min-microvolt = <3300000>;
+            regulator-max-microvolt = <3300000>;
+        };
+	};
 };
 
 &pinctrl {
