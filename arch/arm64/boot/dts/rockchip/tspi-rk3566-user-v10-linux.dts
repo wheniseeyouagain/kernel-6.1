@@ -25,13 +25,13 @@
 
 //[ON/OFF] MIPI display screen config, users can copy and modify for their own screen
 // Note: EDP and MIPI are mutually exclusive as they share VOP. Modify yourself if simultaneous display needed
-// #include "tspi-rk3566-dsi-v10.dtsi"
+#include "tspi-rk3566-dsi-v10.dtsi"
 
 //[ON/OFF] HDMI display screen config, rarely needs modification, comment out if HDMI not needed
-#include "tspi-rk3566-hdmi-v10.dtsi"
+// #include "tspi-rk3566-hdmi-v10.dtsi"
 
 //[ON/OFF] Camera, currently using ov5695
-#include "tspi-rk3566-csi-v10.dtsi"
+// #include "tspi-rk3566-csi-v10.dtsi"
 
 //[ON/OFF] Ethernet, expansion board uses Gigabit Ethernet, can be disabled if not using expansion board
 #include "tspi-rk3566-gmac1-v10.dtsi"
