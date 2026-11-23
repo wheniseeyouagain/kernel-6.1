@@ -98,12 +98,12 @@
 			pinctrl-0 = <&dsi1_rst_gpio>;
 			reg = <0>;
 			backlight = <&backlight>;
-			reset-delay-ms = <200>;
+			reset-delay-ms = <20>;
 			enable-delay-ms = <100>;
 			prepare-delay-ms = <20>;
 			unprepare-delay-ms = <20>;
 			disable-delay-ms = <20>;
-			init-delay-ms = <120>;
+			init-delay-ms = <20>;
 			dsi,flags = <(MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
 				MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET)>;
 			dsi,format = <MIPI_DSI_FMT_RGB888>;
@@ -223,11 +223,11 @@
                 disp_timings1: display-timings {
                         native-mode = <&dsi1_timing0>;
                         dsi1_timing0: timing0 {
-                                clock-frequency = <30000000>;
+                                clock-frequency = <20000000>;//驱动手册上为35500000，如果撕裂，尝试20000000;
 								hactive = <540>;
 								vactive = <960>;
-								hfront-porch = <20>;
-								hsync-len = <20>;
+								hfront-porch = <40>;
+								hsync-len = <10>;
 								hback-porch = <20>;
 								vfront-porch = <4>;
 								vsync-len = <2>;
@@ -236,9 +236,6 @@
                                 vsync-active = <0>;
                                 de-active = <0>;
                                 pixelclk-active = <0>;
-                                swap-rb = <0>;
-                                swap-rg = <0>;
-                                swap-gb = <0>;
                         };
                 };
         ports {
